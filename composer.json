@@ -1,0 +1,36 @@
+{
+  "name": "drewdan/page-builder",
+  "description": "A simple page builder tool for Laravel",
+  "type": "library",
+  "license": "MIT",
+  "require": {},
+  "authors": [
+    {
+      "name": "Andrew Arscott",
+      "email": "andrew@prometheuscomputing.co.uk"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Drewdan\\PageBuilder\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Drewdan\\PageBuilder\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": false,
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Drewdan\\PageBuilder\\PageBuilderServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.1",
+    "orchestra/testbench": "^8.5"
+  }
+}
