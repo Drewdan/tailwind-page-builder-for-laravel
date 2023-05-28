@@ -11,6 +11,10 @@ class PageBuilderServiceProvider extends ServiceProvider {
 		$this->registerRoutes();
 
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'page-builder');
+
+		$this->publishes([
+			__DIR__ . '/../public' => public_path('vendor/page-builder'),
+		], 'public');
 	}
 
 	public function register() {
