@@ -4075,7 +4075,7 @@ const tu = /* @__PURE__ */ Tt({
       key: t.container.id,
       class: Jt(Io(n))
     }, [
-      (le(!0), Se(ge, null, ao(t.container.elements, (r) => (le(), Vt(xr(t.container.type === "img" ? ou : tu), {
+      (le(!0), Se(ge, null, ao(t.container.elements, (r) => (le(), Vt(xr(r.type === "img" ? ou : tu), {
         onClick: (i) => o.$emit("selectElement", r),
         element: r
       }, null, 8, ["onClick", "element"]))), 256))

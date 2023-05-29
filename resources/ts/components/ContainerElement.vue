@@ -42,8 +42,8 @@
 		:class="computedStyles"
 	>
 		<component
-			:is="props.container.type === 'img' ? ImageElement : ElementItem"
 			v-for="item in props.container.elements"
+			:is="item.type === 'img' ? ImageElement : ElementItem"
 			@click="$emit('selectElement', item)"
 			:element="item"
 		/>
