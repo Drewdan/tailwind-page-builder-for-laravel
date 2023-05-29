@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
 	import {computed} from "vue";
-	import ElementItem from "./ElementItem.vue";
+	import ElementItem from "./elements/ElementItem.vue";
+	import ImageElement from "./elements/ImageElement.vue";
 
 	const props = defineProps<{
 		container: any,
@@ -40,7 +41,8 @@
 		:key="props.container.id"
 		:class="computedStyles"
 	>
-		<element-item
+		<component
+			:is="props.container.type === 'img' ? ImageElement : ElementItem"
 			v-for="item in props.container.elements"
 			@click="$emit('selectElement', item)"
 			:element="item"

@@ -3,7 +3,7 @@
 	import PageElement from "./components/PageElement.vue";
 	import ContainerElement from "./components/ContainerElement.vue";
 	import ElementContainerInterface from "./contracts/element-container-interface";
-	import ElementItem from "./components/ElementItem.vue";
+	import ElementItem from "./components/elements/ElementItem.vue";
 	import ElementConfiguration from "./components/config-areas/ElementConfiguration.vue";
 	import ContainerConfiguration from "./components/config-areas/ContainerConfiguration.vue";
 
@@ -31,6 +31,14 @@
 			size: 'md',
 			weight: 'normal',
 			content: 'Some paragraph',
+		},
+		{
+			id: 3,
+			type: 'img',
+			name: 'Image Element',
+			description: 'Use this to create an image element',
+			src: 'https://placehold.it/350x150',
+			alt: 'Placeholder image',
 		},
 	]);
 
