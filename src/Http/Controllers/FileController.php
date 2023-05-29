@@ -9,16 +9,21 @@ use Illuminate\Support\Facades\Storage;
 class FileController extends Controller {
 
 	public function store(Request $request): Response {
-		$fileName = str_replace('/tmp/', '', $request->input('file'));
+		$fileName = str_replace('tmp/', '', $request->input('key'));
 
-		Storage::copy(
-			$request->input('file'),
+		Storage::disk('s3')->copy(
+			$request->input('key'),
 			$fileName,
+		);
+
+		Storage::setVisibility(
+			$fileName,
+			'public',
 		);
 
 		return response(
 			[
-				'file' => $fileName
+				'file' => Storage::url($fileName),
 			]
 		);
 	}

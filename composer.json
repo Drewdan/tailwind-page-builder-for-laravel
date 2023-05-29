@@ -3,7 +3,9 @@
   "description": "A simple page builder tool for Laravel",
   "type": "library",
   "license": "MIT",
-  "require": {},
+  "require": {
+    "laravel/vapor-core": "^2.31"
+  },
   "authors": [
     {
       "name": "Andrew Arscott",

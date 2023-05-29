@@ -1,10 +1,38 @@
 <script setup lang="ts">
+	import axios from "axios";
+	import {ref} from "vue";
+	import Uploader from "../../services/uploader";
 
 	const props = defineProps<{
 		modelValue: any,
 	}>();
 
 	defineEmits(['update:modelValue']);
+
+	const fileSelection = ref<HTMLInputElement|null>(null);
+
+	const selectFile = () => {
+		if (fileSelection.value && "click" in fileSelection.value) {
+			fileSelection.value!.click();
+		}
+	}
+
+	const uploadFile = (e: Event) => {
+		Uploader.store((e.target as any).files[0], {
+			progress: progress => {
+				//this.uploadProgress = Math.round(progress * 100);
+			}
+		}).then(async response => {
+			const file = await axios.post('/page-builder/files', {
+				uuid: response.uuid,
+				key: response.key,
+				bucket: response.bucket,
+			});
+
+			props.modelValue.src = file.data.file;
+		});
+	}
+
 </script>
 
 <template>
@@ -15,7 +43,43 @@
 		>
 			Element Configuration
 		</summary>
-		<div class="flex flex-col gap-3 p-3 bg-white">
+		<div
+			v-if="props.modelValue.type === 'img'"
+			class="flex flex-col gap-3 p-3 bg-white"
+		>
+			<div class="flex flex-col gap-1">
+				<label>File</label>
+				<input
+					type="text"
+					v-model="props.modelValue.src"
+					class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm text-xs"
+				/>
+				<input
+					@change="uploadFile"
+					ref="fileSelection"
+					type="file"
+					class="hidden"
+				/>
+				<button
+					@click="selectFile()"
+					class="border bg-blue-600 hover:bg-blue-700 text-white rounded-md p-2 col-span-4"
+				>
+					Upload File
+				</button>
+			</div>
+			<div class="flex flex-col gap-1">
+				<label>Alt Tag</label>
+				<input
+					type="text"
+					v-model="props.modelValue.alt"
+					class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm text-xs"
+				/>
+			</div>
+		</div>
+		<div
+			v-else
+			class="flex flex-col gap-3 p-3 bg-white"
+		>
 			<div class="flex flex-col gap-1">
 				<label>Text Size</label>
 				<select
