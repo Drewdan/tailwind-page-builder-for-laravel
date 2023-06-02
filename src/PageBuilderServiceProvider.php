@@ -15,6 +15,8 @@ class PageBuilderServiceProvider extends ServiceProvider {
 		$this->publishes([
 			__DIR__ . '/../public' => public_path('vendor/page-builder'),
 		], 'public');
+
+		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 	}
 
 	public function register() {

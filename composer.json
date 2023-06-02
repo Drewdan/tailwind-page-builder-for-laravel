@@ -14,12 +14,13 @@
   ],
   "autoload": {
     "psr-4": {
-      "Drewdan\\PageBuilder\\": "src/"
+      "Drewdan\\PageBuilder\\": "src/",
+      "Drewdan\\PageBuilder\\Database\\Factories\\": "database/factories/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Drewdan\\PageBuilder\\Tests\\": "tests/"
+      "Drewdan\\PageBuilder\\Tests\\": "tests"
     }
   },
   "minimum-stability": "dev",
