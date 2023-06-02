@@ -5,7 +5,7 @@ import Modal from "./components/common/Modal.vue";
 import Page from "./types/page";
 
 let title = ref('');
-let pages = ref<Array<Page>>([]);
+let pages = ref<Page[]>([]);
 let createModalOpen = ref(false);
 
 const getAllPageData = () => {
@@ -113,7 +113,7 @@ onMounted(() => {
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                   <router-link
-                      :to="`/page-builder/pages/${page.id}`"
+                      :to="`/page-builder/pages/${page.slug}`"
                       class="text-indigo-600 hover:text-indigo-900">
                     Edit
                     </router-link>

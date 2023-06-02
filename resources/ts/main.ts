@@ -6,8 +6,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Main from "./Main.vue";
 
 const routes = [
-    { path: '/page-builder/', component: Pages },
-    { path: '/page-builder/pages/:id', component: PageBuilder }
+    { path: '/page-builder/pages', component: Pages },
+    { path: '/page-builder/pages/:slug', component: PageBuilder }
 ];
 
 const router = createRouter({

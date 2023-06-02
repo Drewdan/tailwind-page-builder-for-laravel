@@ -12,7 +12,7 @@ class PageControllerTest extends TestCase {
 			'title' => 'Test Page',
 		];
 
-		$this->post('/page-builder/pages', $data)
+		$this->post('/page-builder/data/pages', $data)
 			->assertStatus(204);
 
 		$this->assertDatabaseHas('pages', $data);
@@ -24,7 +24,7 @@ class PageControllerTest extends TestCase {
 		$data = $page->toArray();
 		$data['title'] = 'Updated Title';
 
-		$this->put('/page-builder/pages/' . $page->slug, $data)
+		$this->put('/page-builder/data/pages/' . $page->slug, $data)
 			->assertStatus(204);
 
 		$this->assertDatabaseHas('pages', [
@@ -36,7 +36,7 @@ class PageControllerTest extends TestCase {
 	public function testCanDeletePage() {
 		$page = Page::factory()->create();
 
-		$this->delete('/page-builder/pages/' . $page->slug)
+		$this->delete('/page-builder/data/pages/' . $page->slug)
 			->assertStatus(204);
 
 		$this->assertDatabaseMissing('pages', [

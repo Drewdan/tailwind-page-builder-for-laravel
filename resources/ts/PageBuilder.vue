@@ -1,11 +1,14 @@
 <script setup lang="ts">
 	import {onMounted, ref} from 'vue';
-	import PageElement from "./components/PageElement.vue";
 	import ContainerElement from "./components/ContainerElement.vue";
 	import ElementContainerInterface from "./contracts/element-container-interface";
-	import ElementItem from "./components/elements/ElementItem.vue";
 	import ElementConfiguration from "./components/config-areas/ElementConfiguration.vue";
 	import ContainerConfiguration from "./components/config-areas/ContainerConfiguration.vue";
+  import Page from "./types/page";
+  import axios from "axios";
+  import {useRoute} from "vue-router";
+
+  const route = useRoute();
 
 	const selectedContainer = ref<ElementContainerInterface | null>(null);
 	const containers = ref<ElementContainerInterface[]>([]);
@@ -42,6 +45,15 @@
 		},
 	]);
 
+  window.addEventListener('keypress', (e) => {
+			if (e.ctrlKey && e.key === 's') {
+				e.preventDefault();
+				savePage();
+			}
+		})
+
+  const page = ref<Page|null>(null);
+
 	const addContainer = () => {
 		const baseItem = {
 			id: 0,
@@ -76,27 +88,30 @@
 		selectedElement.value = element;
 	}
 
-	const savePage = () => {
-		localStorage.setItem('page', JSON.stringify(containers.value));
-	}
-
 	const clearAll = () => {
 		localStorage.removeItem('page');
 		containers.value = [];
 	}
 
-	onMounted(() => {
-		const page = localStorage.getItem('page');
-		if (page) {
-			containers.value = JSON.parse(page);
-		}
+  const loadPage = (slug: string) => {
+      axios.get(`/page-builder/data/pages/${slug}`).then(({ data }) => {
+        page.value = data.page;
+        containers.value = JSON.parse(data.page.content) ?? [];
+      });
+  }
 
-		window.addEventListener('keypress', (e) => {
-			if (e.ctrlKey && e.key === 's') {
-				e.preventDefault();
-				savePage();
-			}
-		})
+  const savePage = () => {
+    axios.patch(`/page-builder/data/pages/${page.value!.slug}`, {
+      title: page.value!.title,
+      slug: page.value!.slug,
+      content: JSON.stringify(containers.value),
+    });
+  }
+
+	onMounted(() => {
+    loadPage(route.params.slug as string);
+
+
 	})
 
 

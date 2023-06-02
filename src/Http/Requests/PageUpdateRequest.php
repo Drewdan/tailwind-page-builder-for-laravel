@@ -13,7 +13,7 @@ class PageUpdateRequest extends FormRequest {
 			],
 			'content' => [
 				'nullable',
-				'array',
+				'json',
 			],
 			'page_title' => [
 				'nullable',

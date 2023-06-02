@@ -24,7 +24,7 @@ class PageController extends Controller {
 	}
 
 	public function store(PageStoreRequest $request): Response {
-		$page = Page::create($request->validated());
+		Page::create($request->validated());
 
 		return response()->noContent();
 	}
