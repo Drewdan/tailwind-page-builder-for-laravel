@@ -13,12 +13,14 @@ class PageController extends Controller {
 	// TODO: config item for allowing policies to be added
 
 	public function index() {
+		$pages = Page::all();
 
+		return response(['pages' => $pages]);
 	}
 
 	// This won't be needed as we will use the vue router
-	public function edit(): Response {
-		return response()->view('page-builder::pages.edit');
+	public function show(Page $page): Response {
+		return response(['page' => $page]);
 	}
 
 	public function store(PageStoreRequest $request): Response {

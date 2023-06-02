@@ -11,10 +11,10 @@
 
     <!-- Style sheets-->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet"/>
 </head>
 <body>
-	<div id="page-builder"></div>
+	<div id="app"></div>
 </body>
 	@vite(['public/vendor/page-builder/js/tailwind-page-builder.js'])
 </html>
