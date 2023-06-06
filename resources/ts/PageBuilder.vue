@@ -1,120 +1,122 @@
 <script setup lang="ts">
-	import {onMounted, ref} from 'vue';
-	import ContainerElement from "./components/ContainerElement.vue";
-	import ElementContainerInterface from "./contracts/element-container-interface";
-	import ElementConfiguration from "./components/config-areas/ElementConfiguration.vue";
-	import ContainerConfiguration from "./components/config-areas/ContainerConfiguration.vue";
-  import Page from "./types/page";
-  import axios from "axios";
-  import {useRoute} from "vue-router";
+import {onMounted, ref} from 'vue';
+import ContainerElement from "./components/ContainerElement.vue";
+import ElementContainerInterface from "./contracts/element-container-interface";
+import ElementConfiguration from "./components/config-areas/ElementConfiguration.vue";
+import ContainerConfiguration from "./components/config-areas/ContainerConfiguration.vue";
+import Page from "./types/page";
+import {useRoute} from "vue-router";
+import ApiClient from "./services/api-client";
+import {RendererType} from "./types/renderers";
 
-  const route = useRoute();
+const route = useRoute();
 
-	const selectedContainer = ref<ElementContainerInterface | null>(null);
-	const containers = ref<ElementContainerInterface[]>([]);
-	const selectedElement = ref<any | null>(null);
+const client = new ApiClient();
 
-	// TODO: this doesn't need to be a ref
-	const items = ref<any[]>([
-		{
-			id: 1,
-			type: 'h1',
-			name: 'Heading',
-			description: 'Use this element to create a heading',
-			classes: 'text-2xl font-bold',
-			size: '4xl',
-			weight: 'bold',
-			content: 'Some heading',
-		},
-		{
-			id: 2,
-			type: 'p',
-			name: 'Paragraph',
-			description: 'Use this element to create a paragraph',
-			size: 'md',
-			weight: 'normal',
-			content: 'Some paragraph',
-		},
-		{
-			id: 3,
-			type: 'img',
-			name: 'Image Element',
-			description: 'Use this to create an image element',
-			src: 'https://placehold.it/350x150',
-			alt: 'Placeholder image',
-		},
-	]);
+const selectedContainer = ref<ElementContainerInterface | null>(null);
+const containers = ref<ElementContainerInterface[]>([]);
+const selectedElement = ref<any | null>(null);
 
-  window.addEventListener('keypress', (e) => {
-			if (e.ctrlKey && e.key === 's') {
-				e.preventDefault();
-				savePage();
-			}
-		})
+// TODO: this doesn't need to be a ref
+const items = [
+	{
+		id: 1,
+		type: 'h1',
+		renderer: RendererType.Text,
+		name: 'Heading',
+		description: 'Use this element to create a heading',
+		classes: 'text-2xl font-bold',
+		size: '4xl',
+		weight: 'bold',
+		content: 'Some heading',
+		alignment: 'text-left',
+	},
+	{
+		id: 2,
+		type: 'p',
+		renderer: RendererType.Text,
+		name: 'Paragraph',
+		description: 'Use this element to create a paragraph',
+		size: 'md',
+		weight: 'normal',
+		content: 'Some paragraph',
+		alignment: 'text-left',
+	},
+	{
+		id: 3,
+		type: 'img',
+		renderer: RendererType.Image,
+		name: 'Image Element',
+		description: 'Use this to create an image element',
+		src: 'https://placehold.it/350x150',
+		alt: 'Placeholder image',
+	},
+];
 
-  const page = ref<Page|null>(null);
-
-	const addContainer = () => {
-		const baseItem = {
-			id: 0,
-			classes: 'border border-gray-300',
-			colSpan: 4,
-			textAlign: 'text-left',
-			elements: [],
-		} as ElementContainerInterface;
-
-		const item = JSON.parse(JSON.stringify(baseItem))
-		item.id = containers.value.length;
-		containers.value.push(item);
-	}
-
-	const addToPage = (e: DragEvent, item: any) => {
-		e.dataTransfer!.dropEffect = 'move'
-		e.dataTransfer!.effectAllowed = 'move'
-		e.dataTransfer!.setData('item', JSON.stringify(item));
-	}
-
-	const onDrop = (e: DragEvent, container: ElementContainerInterface) => {
+document.addEventListener('keydown', (e) => {
+	if (e.ctrlKey && e.key === 's') {
 		e.preventDefault();
-		const item = JSON.parse(e.dataTransfer!.getData('item'));
-		container.elements.push({...item});
+		savePage();
 	}
+})
 
-	const selectContainer = (container: ElementContainerInterface) => {
-		selectedContainer.value = container;
+const page = ref<Page | null>(null);
+
+const addContainer = () => {
+	const baseItem = {
+		id: 0,
+		classes: 'border border-gray-300',
+		colSpan: 4,
+		textAlign: 'text-left',
+		elements: [],
+	} as ElementContainerInterface;
+
+	const item = JSON.parse(JSON.stringify(baseItem))
+	item.id = containers.value.length;
+	containers.value.push(item);
+}
+
+const addToPage = (e: DragEvent, item: any) => {
+	e.dataTransfer!.dropEffect = 'move'
+	e.dataTransfer!.effectAllowed = 'move'
+	e.dataTransfer!.setData('item', JSON.stringify(item));
+}
+
+const onDrop = (e: DragEvent, container: ElementContainerInterface) => {
+	e.preventDefault();
+	const item = JSON.parse(e.dataTransfer!.getData('item'));
+	container.elements.push({...item});
+}
+
+const selectContainer = (container: ElementContainerInterface) => {
+	selectedContainer.value = container;
+}
+
+const selectElement = (element: any) => {
+	selectedElement.value = element;
+}
+
+const clearAll = () => {
+	localStorage.removeItem('page');
+	containers.value = [];
+}
+
+const loadPage = async (slug: string) => {
+	const pageData = await client.loadPage(slug);
+
+	page.value = pageData;
+	if (typeof pageData.content === 'string') {
+		containers.value = JSON.parse(pageData.content) ?? [];
 	}
+}
 
-	const selectElement = (element: any) => {
-		selectedElement.value = element;
-	}
+const savePage = async () => {
+	await client.savePage(page.value!.slug, page.value!.title, containers.value);
+}
 
-	const clearAll = () => {
-		localStorage.removeItem('page');
-		containers.value = [];
-	}
-
-  const loadPage = (slug: string) => {
-      axios.get(`/page-builder/data/pages/${slug}`).then(({ data }) => {
-        page.value = data.page;
-        containers.value = JSON.parse(data.page.content) ?? [];
-      });
-  }
-
-  const savePage = () => {
-    axios.patch(`/page-builder/data/pages/${page.value!.slug}`, {
-      title: page.value!.title,
-      slug: page.value!.slug,
-      content: JSON.stringify(containers.value),
-    });
-  }
-
-	onMounted(() => {
-    loadPage(route.params.slug as string);
-
-
-	})
-
-
+onMounted(() => {
+	loadPage(route.params.slug as string);
+});
 </script>
 
 <template>
@@ -176,6 +178,7 @@
 			class="col-span-4 grid grid-cols-4 gap-4 p-5 content-start"
 		>
 			<ContainerElement
+				:items="items"
 				@click="selectContainer(container)"
 				@dragover.prevent
 				@dragenter.prevent

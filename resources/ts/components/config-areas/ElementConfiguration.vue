@@ -1,7 +1,9 @@
 <script setup lang="ts">
-	import axios from "axios";
 	import {ref} from "vue";
 	import Uploader from "../../services/uploader";
+	import ApiClient from "../../services/api-client";
+
+	const client = new ApiClient();
 
 	const props = defineProps<{
 		modelValue: any,
@@ -23,13 +25,7 @@
 				//this.uploadProgress = Math.round(progress * 100);
 			}
 		}).then(async response => {
-			const file = await axios.post('/page-builder/files', {
-				uuid: response.uuid,
-				key: response.key,
-				bucket: response.bucket,
-			});
-
-			props.modelValue.src = file.data.file;
+			props.modelValue.src = await client.storeFile(response.uuid, response.key, response.bucket);
 		});
 	}
 

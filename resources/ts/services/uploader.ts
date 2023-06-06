@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
 
 interface UploadOptions {
     bucket?: string | undefined;
@@ -13,6 +13,23 @@ interface UploadOptions {
 }
 
 class Uploader {
+
+    client: AxiosInstance;
+
+    constructor() {
+        let config: AxiosRequestConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        if (import.meta.env.DEV) {
+            console.log('loading client for dev file uploader');
+            config.baseURL = 'http://package.test';
+        }
+
+        this.client = axios.create(config);
+    }
     /**
      * Generate the S3 URL to an application asset.
      */
@@ -24,14 +41,13 @@ class Uploader {
      * Store a file in S3 and return its UUID, key, and other information.
      */
     async store(file: File, options: UploadOptions = {}) {
-        const response = await axios.post('/page-builder/storage-url', {
+        const response = await this.client.post('/page-builder/storage-url', {
             'bucket': options.bucket || '',
             'content_type': options.contentType || file.type,
             'expires': options.expires || '',
             'visibility': options.visibility || '',
             ...options.data
         }, {
-            baseURL: options.baseURL || null,
             headers: options.headers || {},
             ...options.options
         });

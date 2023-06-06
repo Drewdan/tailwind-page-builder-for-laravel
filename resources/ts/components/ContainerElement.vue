@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
 	import {computed} from "vue";
-	import ElementItem from "./elements/ElementItem.vue";
-	import ImageElement from "./elements/ImageElement.vue";
+	import ElementLoader from "./ElementLoader.vue";
 
 	const props = defineProps<{
 		container: any,
+		items: any,
 	}>();
 
 	const computedStyles = computed(() => {
@@ -41,11 +40,11 @@
 		:key="props.container.id"
 		:class="computedStyles"
 	>
-		<component
+		<ElementLoader
 			v-for="item in props.container.elements"
-			:is="item.type === 'img' ? ImageElement : ElementItem"
-			@click="$emit('selectElement', item)"
+			:items="props.items"
 			:element="item"
+			@click="$emit('selectElement', item)"
 		/>
 	</div>
 </template>

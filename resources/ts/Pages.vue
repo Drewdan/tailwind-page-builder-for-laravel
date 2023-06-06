@@ -3,23 +3,22 @@ import axios from "axios";
 import {onMounted, ref} from "vue";
 import Modal from "./components/common/Modal.vue";
 import Page from "./types/page";
+import ApiClient from "./services/api-client";
+
+const client = new ApiClient();
 
 let title = ref('');
 let pages = ref<Page[]>([]);
 let createModalOpen = ref(false);
 
-const getAllPageData = () => {
+const getAllPageData = async () => {
   // TODO: Make async
-  axios.get(`/page-builder/data/pages`).then((response) => {
-    pages.value = response.data.pages;
-  }).catch(() => {
-    console.log('Error getting page data');
-  })
+  pages.value = await client.loadPages();
 }
 
 const createPageData = async () => {
-  await axios.post(`/page-builder/data/pages`, {title: title.value});
-  getAllPageData();
+  await client.createPage(title.value);
+  await getAllPageData();
   closeCreateModal();
 }
 
