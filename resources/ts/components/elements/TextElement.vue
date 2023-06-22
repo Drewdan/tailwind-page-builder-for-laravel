@@ -8,13 +8,13 @@ const props = defineProps<{
 	items: any,
 }>();
 
-const element = computed((): TextElement => {
-	const rawConfig = props.items.find((x) => x.type === props.element.type);
+const element = computed((): typeof TextElement => {
+	const rawConfig = props.items.find((x: any) => x.type === props.element.type);
 
 	return {
 		...rawConfig,
 		...props.element,
-	} as TextElement
+	} as typeof TextElement
 })
 
 const computedStyles = computed(() => {
@@ -42,7 +42,7 @@ const computedStyles = computed(() => {
 			size = 'text-4xl';
 			break;
 		default:
-			size = 'text-sm';
+			size = 'text-base';
 	}
 
 	let weight: string;

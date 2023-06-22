@@ -4,6 +4,7 @@
   "type": "library",
   "license": "MIT",
   "require": {
+    "php": "^8.0",
     "laravel/vapor-core": "^2.31",
     "ext-json": "*"
   },

@@ -121,7 +121,7 @@ onMounted(() => {
 
 <template>
 	<div class="grid grid-cols-5 min-h-screen">
-		<div class="col-span-1 bg-gray-100 flex flex-col">
+		<div class="col-span-1 bg-gray-100 flex flex-col h-screen overflow-auto">
 			<div class="flex flex-col">
 				<button
 					@click="clearAll"

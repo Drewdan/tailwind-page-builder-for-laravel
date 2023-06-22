@@ -32,15 +32,27 @@ class PageBuilderServiceProvider extends ServiceProvider {
 	}
 
 	protected function registerRoutes() {
-		Route::group($this->routeConfiguration(), function () {
+		Route::group($this->externalRouteConfiguration(), function () {
 			$this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 		});
+
+		Route::group($this->internalRouteConfiguration(), function () {
+			$this->loadRoutesFrom(__DIR__ . '/../routes/internal.php');
+		});
+
 	}
 
-	protected function routeConfiguration() {
+	protected function internalRouteConfiguration(): array {
 		return [
 			'prefix' => config('page-builder.prefix'),
 			'middleware' => config('page-builder.middleware'),
+		];
+	}
+
+	protected function externalRouteConfiguration(): array {
+		return [
+			'prefix' => config('page-builder.external.prefix'),
+			'middleware' => config('page-builder.external.middleware'),
 		];
 	}
 
