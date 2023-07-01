@@ -1,6 +1,8 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
 import Page from "../types/page";
 import ElementContainerInterface from "../contracts/element-container-interface";
+import TextElement from "../components/elements/TextElement.vue";
+import TextElementContract from "../types/text-element";
 
 export default class ApiClient {
 
@@ -19,6 +21,10 @@ export default class ApiClient {
         }
 
         this.client = axios.create(config);
+    }
+
+    async loadElements(): Promise<TextElementContract[]> {
+        return (await this.client.get('/page-builder/elements')).data;
     }
 
     async loadPages(): Promise<Page[]> {

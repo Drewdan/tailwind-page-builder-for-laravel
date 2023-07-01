@@ -8,6 +8,7 @@ import Page from "./types/page";
 import {useRoute} from "vue-router";
 import ApiClient from "./services/api-client";
 import {RendererType} from "./types/renderers";
+import TextElementContract from "./types/text-element";
 
 const route = useRoute();
 
@@ -18,40 +19,7 @@ const containers = ref<ElementContainerInterface[]>([]);
 const selectedElement = ref<any | null>(null);
 
 // TODO: this doesn't need to be a ref
-const items = [
-	{
-		id: 1,
-		type: 'h1',
-		renderer: RendererType.Text,
-		name: 'Heading',
-		description: 'Use this element to create a heading',
-		classes: 'text-2xl font-bold',
-		size: '4xl',
-		weight: 'bold',
-		content: 'Some heading',
-		alignment: 'text-left',
-	},
-	{
-		id: 2,
-		type: 'p',
-		renderer: RendererType.Text,
-		name: 'Paragraph',
-		description: 'Use this element to create a paragraph',
-		size: 'md',
-		weight: 'normal',
-		content: 'Some paragraph',
-		alignment: 'text-left',
-	},
-	{
-		id: 3,
-		type: 'img',
-		renderer: RendererType.Image,
-		name: 'Image Element',
-		description: 'Use this to create an image element',
-		src: 'https://placehold.it/350x150',
-		alt: 'Placeholder image',
-	},
-];
+let items: TextElementContract[] = [];
 
 document.addEventListener('keydown', (e) => {
 	if (e.ctrlKey && e.key === 's') {
@@ -114,8 +82,9 @@ const savePage = async () => {
 	await client.savePage(page.value!.slug, page.value!.title, containers.value);
 }
 
-onMounted(() => {
-	loadPage(route.params.slug as string);
+onMounted(async () => {
+	items = await client.loadElements();
+	await loadPage(route.params.slug as string);
 });
 </script>
 

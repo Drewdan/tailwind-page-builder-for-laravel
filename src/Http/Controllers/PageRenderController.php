@@ -46,6 +46,10 @@ class PageRenderController {
 						->build();
 				}
 
+				if (!isset($child['content'])) {
+					throw new Exception('Invalid content');
+				}
+
 				if ($builder instanceof ParagraphBuilder) {
 					return $builder->setContent($child['content'])
 						->setSize($child['size'])
