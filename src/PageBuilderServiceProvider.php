@@ -3,7 +3,9 @@
 namespace Drewdan\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Drewdan\PageBuilder\View\Components\DefaultLayout;
 
 class PageBuilderServiceProvider extends ServiceProvider {
 
@@ -17,6 +19,8 @@ class PageBuilderServiceProvider extends ServiceProvider {
 		], 'public');
 
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+		Blade::component('default-layout', DefaultLayout::class);
 	}
 
 	public function register() {

@@ -16,12 +16,10 @@ class PageRenderController {
 			$el = '<div ';
 
 			if ($item['colSpan'] > 1) {
-				$el .= 'class="col-span-' . $item['colSpan'] . '" ';
+				$el .= 'class="col-span-' . $item['colSpan'] . ' ';
 			}
 
-			if ($item['textAlign'] !== 'left') {
-				$el .= 'style="text-align: ' . $item['textAlign'] . '" ';
-			}
+			$el .= '' . $item['textAlign'] . '" ';
 
 			$el .= '>';
 
@@ -68,6 +66,9 @@ class PageRenderController {
 			return $el;
 		})->implode('');
 
-		return view('page-builder::page', compact('contents'));
+		return response()->view('page-builder::page', [
+			'contents' => $contents,
+			'componentName' => config('page-builder.layout'),
+		]);
 	}
 }

@@ -24,7 +24,7 @@ class ImageBuilder {
 	}
 
 	public function build(): string {
-		return '<img ' . $this->src . $this->alt . ' />';
+		return '<img class="w-full" ' . $this->src . $this->alt . ' />';
 	}
 
 }

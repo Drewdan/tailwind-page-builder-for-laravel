@@ -3,6 +3,8 @@ module.exports = {
   mode: 'jit',
   content: [
     "./resources/ts/**/*.{vue,js,ts,jsx,tsx}",
+    "./resources/views/**/*.php",
+  "./resources/views/components/**/*.{php,blade.php}",
   ],
   theme: {
     extend: {},

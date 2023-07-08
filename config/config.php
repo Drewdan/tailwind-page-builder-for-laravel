@@ -7,6 +7,7 @@ return [
 		'prefix' => null,
 		'middleware' => ['web'], // you probably want to include 'web' here
 	],
+	'layout' => 'default-layout',
 	'elements' => [
 		[
 			'id' => 1,
@@ -17,7 +18,7 @@ return [
 			'size' => '4xl',
 			'weight' => 'bold',
 			'content' => 'Some heading',
-			'alignment' => 'text-left',
+			'alignment' => 'content-left',
 		],
 		[
 			'id' => 2,
@@ -28,7 +29,7 @@ return [
 			'size' => 'md',
 			'weight' => 'normal',
 			'content' => 'Some paragraph',
-			'alignment' => 'text-left',
+			'alignment' => 'content-left',
 		],
 		[
 			'id' => 3,
