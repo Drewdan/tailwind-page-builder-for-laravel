@@ -1,6 +1,7 @@
 {
   "name": "drewdan/page-builder",
   "description": "A simple page builder tool for Laravel",
+  "version": "0.0.2",
   "type": "library",
   "license": "MIT",
   "require": {
