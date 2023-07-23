@@ -16,7 +16,7 @@ class PageRenderController {
 			$el = '<div ';
 
 			if ($item['colSpan'] > 1) {
-				$el .= 'class="col-span-' . $item['colSpan'] . ' ';
+				$el .= 'class="md:col-span-' . $item['colSpan'] . ' ';
 			}
 
 			$el .= '' . $item['textAlign'] . '" ';
@@ -53,7 +53,6 @@ class PageRenderController {
 						->setSize($child['size'])
 						->setWeight($child['weight'])
 						->build();
-
 				}
 
 				throw new Exception('Invalid builder type');
@@ -65,6 +64,8 @@ class PageRenderController {
 
 			return $el;
 		})->implode('');
+
+		$contents = "<div class=\"col-span-4 grid grid-cols-1 md:grid-cols-4 gap-4 p-5 content-start\">{$contents}</div>";
 
 		return response()->view('page-builder::page', [
 			'contents' => $contents,

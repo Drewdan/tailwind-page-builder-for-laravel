@@ -13,8 +13,5 @@
     <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet"/>
 </head>
 <body>
-<div
-        class="col-span-4 grid grid-cols-4 gap-4 p-5 content-start"
->
     {{ $slot }}
-</div>
+</html>
