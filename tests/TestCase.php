@@ -2,6 +2,7 @@
 
 namespace Drewdan\PageBuilder\Tests;
 
+use Spatie\LaravelRay\RayServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Drewdan\PageBuilder\PageBuilderServiceProvider;
@@ -18,6 +19,7 @@ class TestCase extends BaseTestCase {
 	protected function getPackageProviders($app) {
 		return [
 			PageBuilderServiceProvider::class,
+			RayServiceProvider::class,
 		];
 	}
 

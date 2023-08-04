@@ -16,14 +16,6 @@ class PageFactory extends Factory {
 		return [
 			'title' => $this->faker->sentence,
 			'slug' => $this->faker->slug,
-			'content' => json_encode([
-				'blocks' => [
-					[
-						'type' => 'text',
-						'content' => $this->faker->paragraph,
-					],
-				],
-			]),
 		];
 	}
 }
