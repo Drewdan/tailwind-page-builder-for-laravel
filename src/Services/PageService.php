@@ -33,12 +33,17 @@ class PageService {
 
 		$contents = $page->content;
 
+		// This page has no contents yet, so just early return an empty string
+		if (!$contents) {
+			return '<div></div>';
+		}
+
 		$gridContainers = collect();
 
 		foreach ($contents as $content) {
 			$gridContainer = ContainerElementBuilder::make()
 				->setColspan(1)
-				->setMdColspan($content['colspan']);
+				->setMdColspan($content['colSpan']);
 
 			$children = collect($content['elements'] ?? [])->map(function ($child) {
 				if (isset($child['renderer']) && $child['renderer'] === 'Image') {

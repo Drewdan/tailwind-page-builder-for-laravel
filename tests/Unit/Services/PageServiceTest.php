@@ -29,7 +29,7 @@ class PageServiceTest extends TestCase {
 			'content' => [
 				[
 					'id' => 0,
-					'colspan' => 4,
+					'colSpan' => 4,
 					'textAlign' => 'text-center',
 					'elements' => [
 						[
@@ -44,7 +44,7 @@ class PageServiceTest extends TestCase {
 				],
 				[
 					'id' => 3,
-					'colspan' => 4,
+					'colSpan' => 4,
 					'textAlign' => 'text-center',
 					'elements' => [
 						[
