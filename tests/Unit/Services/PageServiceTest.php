@@ -23,4 +23,48 @@ class PageServiceTest extends TestCase {
 		$this->assertEquals('http://localhost/page/test-page-2', $routes->last()->url);
 	}
 
+	public function testCanBuildPageFromJson() {
+		$page = Page::factory()->create([
+			'title' => 'My test page',
+			'content' => [
+				[
+					'id' => 0,
+					'colspan' => 4,
+					'textAlign' => 'text-center',
+					'elements' => [
+						[
+							'id' => 1,
+							'type' => 'h1',
+							'renderer' => 'Text',
+							'size' => '4xl',
+							'weight' => 'bold',
+							'content' => 'A heading',
+						]
+					],
+				],
+				[
+					'id' => 3,
+					'colspan' => 4,
+					'textAlign' => 'text-center',
+					'elements' => [
+						[
+							'id' => 4,
+							'type' => 'p',
+							'renderer' => 'Text',
+							'size' => 'md',
+							'weight' => 'normal',
+							'content' => 'A paragraph',
+						]
+					]
+				]
+			],
+		]);
+
+		$service = new PageService();
+
+		$html = $service->buildPage($page);
+
+		$this->assertEquals('<div class="grid md:grid-cols-4 content-start p-5 gap-4"><div class="col-span-1 md:col-span-4"><p class="text-4xl font-bold">A heading</p></div><div class="col-span-1 md:col-span-4"><p class="text-md font-normal">A paragraph</p></div></div>', $html);
+	}
+
 }

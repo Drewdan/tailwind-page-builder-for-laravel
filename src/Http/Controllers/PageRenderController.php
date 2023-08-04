@@ -4,9 +4,9 @@ namespace Drewdan\PageBuilder\Http\Controllers;
 
 use Exception;
 use Drewdan\PageBuilder\Models\Page;
-use Drewdan\PageBuilder\Builders\ImageBuilder;
-use Drewdan\PageBuilder\Builders\HeadingBuilder;
-use Drewdan\PageBuilder\Builders\ParagraphBuilder;
+use Drewdan\PageBuilder\Builders\ImageElementBuilder;
+use Drewdan\PageBuilder\Builders\HeadingElementBuilder;
+use Drewdan\PageBuilder\Builders\ParagraphElementBuilder;
 
 class PageRenderController {
 	public function __invoke(Page $page) {
@@ -25,19 +25,19 @@ class PageRenderController {
 
 			$children = collect($item['elements'] ?? [])->map(function ($child) {
 				if (isset($child['renderer']) && $child['renderer'] === 'Image') {
-					return ImageBuilder::make()
+					return ImageElementBuilder::make()
 						->setSrc($child['src'])
 						->setAlt($child['alt'])
 						->build();
 				}
 
 				$builder = match($child['renderer'] ?? 'Text') {
-					'Heading' => HeadingBuilder::make(),
-					'Paragraph','Text' => ParagraphBuilder::make(),
+					'Heading' => HeadingElementBuilder::make(),
+					'Paragraph','Text' => ParagraphElementBuilder::make(),
 					default => throw new Exception('Invalid renderer type ' . $child['renderer']),
 				};
 
-				if ($builder instanceof HeadingBuilder) {
+				if ($builder instanceof HeadingElementBuilder) {
 					return $builder->setContent($child['content'])
 						->setSize($child['size'])
 						->setWeight($child['weight'])
@@ -48,7 +48,7 @@ class PageRenderController {
 					throw new Exception('Invalid content');
 				}
 
-				if ($builder instanceof ParagraphBuilder) {
+				if ($builder instanceof ParagraphElementBuilder) {
 					return $builder->setContent($child['content'])
 						->setSize($child['size'])
 						->setWeight($child['weight'])

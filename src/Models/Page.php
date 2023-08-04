@@ -14,7 +14,7 @@ class Page extends Model {
 	protected $guarded = [];
 
 	protected $casts = [
-		'content' => 'json',
+		'content' => 'array',
 	];
 
 	public function getRouteKeyName(): string {

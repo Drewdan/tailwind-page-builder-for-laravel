@@ -42,7 +42,7 @@ export default class ApiClient {
     async savePage(slug: string, title: string, content: ElementContainerInterface[]): Promise<void> {
         await this.client.put(`/page-builder/data/pages/${slug}`, {
             title,
-            content: JSON.stringify(content)
+            content: content
         });
     }
 

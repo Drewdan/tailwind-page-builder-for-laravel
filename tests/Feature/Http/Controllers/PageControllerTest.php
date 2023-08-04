@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Http\Controllers;
+namespace Http\Controllers;
 
 use Drewdan\PageBuilder\Models\Page;
 use Drewdan\PageBuilder\Tests\TestCase;
@@ -31,6 +31,52 @@ class PageControllerTest extends TestCase {
 			'id' => $page->id,
 			'title' => 'Updated Title',
 		]);
+	}
+
+	public function testCanStoreUpdatedPageContentCorrectly() {
+		$page = Page::factory()->create();
+
+		$content = [
+			[
+				'id' => 0,
+				'colspan' => 4,
+				'textAlign' => 'text-center',
+				'elements' => [
+					[
+						'id' => 1,
+						'type' => 'h1',
+						'renderer' => 'Text',
+						'size' => '4xl',
+						'weight' => 'bold',
+						'content' => 'A heading',
+					],
+				],
+			],
+			[
+				'id' => 3,
+				'colspan' => 4,
+				'textAlign' => 'text-center',
+				'elements' => [
+					[
+						'id' => 4,
+						'type' => 'p',
+						'renderer' => 'Text',
+						'size' => 'md',
+						'weight' => 'normal',
+						'content' => 'A paragraph',
+					],
+				],
+			],
+		];
+
+		$data = $page->toArray();
+		$data['content'] = $content;
+
+		$this->put('/page-builder/data/pages/' . $page->slug, $data)
+			->assertSessionHasNoErrors()
+			->assertStatus(204);
+
+
 	}
 
 	public function testCanDeletePage() {
