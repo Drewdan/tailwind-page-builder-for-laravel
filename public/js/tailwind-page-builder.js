@@ -5740,7 +5740,7 @@ class ri {
   async savePage(t, n, o) {
     await this.client.put(`/page-builder/data/pages/${t}`, {
       title: n,
-      content: JSON.stringify(o)
+      content: o
     });
   }
   async storeFile(t, n, o) {
