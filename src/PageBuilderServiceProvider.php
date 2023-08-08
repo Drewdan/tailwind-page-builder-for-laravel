@@ -9,7 +9,7 @@ use Drewdan\PageBuilder\View\Components\DefaultLayout;
 
 class PageBuilderServiceProvider extends ServiceProvider {
 
-	const PACKAGE_VERSION = '0.0.4';
+	const PACKAGE_VERSION = '0.0.5';
 
 	public function boot() {
 		$this->registerRoutes();

@@ -1,3 +1,7 @@
+# 0.0.5 (2023-08-08)
+
+- Fixes the production build so the vite manifest file generates correctly
+
 # 0.0.4 (2023-08-04)
 
 - Adds a New Builder Class for Containers and Refactors the Page Builder to use it. This change also refactors a lot of code to make it more reusable.
