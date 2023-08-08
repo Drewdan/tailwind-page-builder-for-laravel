@@ -1,3 +1,7 @@
+# 0.0.6 (2023-08-08)
+
+- More vite fixes
+
 # 0.0.5 (2023-08-08)
 
 - Fixes the production build so the vite manifest file generates correctly
