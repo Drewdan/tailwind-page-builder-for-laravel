@@ -9,14 +9,13 @@ export default defineConfig(({ mode }) => {
 	const config: UserConfigExport = {
         build: {
             lib: {
-                // Could also be a dictionary or array of multiple entry points
                 entry: 'resources/ts/main.ts',
                 name: 'tailwind-page-builder',
             },
         },
         plugins: [
             mode === 'production' ? laravel({
-                buildDirectory: 'js',
+                buildDirectory: 'vendor/page-builder/js',
                 input: 'resources/ts/main.ts'
             }) : null,
             vue()
