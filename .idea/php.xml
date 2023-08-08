@@ -131,11 +131,12 @@
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/vendor/nunomaduro/termwind" />
       <path value="$PROJECT_DIR$/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/vendor/laravel/prompts" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="e9ce0bd0-7fee-4330-ba36-dc5ee0afd0bc" name="Ubuntu-22.04" home="\\wsl$\Ubuntu-22.04/usr/bin/php" false="false" debugger_id="php.debugger.XDebug">
+      <interpreter id="e9ce0bd0-7fee-4330-ba36-dc5ee0afd0bc" name="Ubuntu-22.04" home="\\wsl$\Ubuntu-22.04/usr/bin/php" auto="false" debugger_id="php.debugger.XDebug">
         <remote_data INTERPRETER_PATH="/usr/bin/php" HELPERS_PATH="" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DISTRIBUTION_ID="Ubuntu-22.04" />
       </interpreter>
     </interpreters>

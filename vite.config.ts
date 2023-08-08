@@ -15,7 +15,6 @@ export default defineConfig(({ mode }) => {
         },
         plugins: [
             mode === 'production' ? laravel({
-                buildDirectory: 'vendor/page-builder/js',
                 input: 'resources/ts/main.ts'
             }) : null,
             vue()

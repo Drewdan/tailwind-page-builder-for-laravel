@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	@vite(['public/vendor/page-builder/js/style.css'])
+
 
     <title>Page Builder - {{ config('app.name') ? ' - ' . config('app.name') : '' }}</title>
 
@@ -16,7 +16,7 @@
 <body>
 	<div id="app"></div>
 </body>
-	@vite(['public/vendor/page-builder/js/tailwind-page-builder.js'])
+@vite(['public/vendor/page-builder/build/tailwind-page-builder.js', 'public/vendor/page-builder/build/style.css'])
 </html>
 
 {{--<script src="{{ asset('vendor/page-builder/tailwind-page-builder.js') }}" type="module"></script>--}}
