@@ -64,7 +64,7 @@ class PageServiceTest extends TestCase {
 
 		$html = $service->buildPage($page);
 
-		$this->assertEquals('<div class="grid md:grid-cols-4 content-start p-5 gap-4"><div class="col-span-1 md:col-span-4"><p class="text-4xl font-bold">A heading</p></div><div class="col-span-1 md:col-span-4"><p class="text-md font-normal">A paragraph</p></div></div>', $html);
+		$this->assertEquals('<div class="grid md:grid-cols-4 content-start p-5 gap-4"><div class="text-center col-span-1 md:col-span-4"><p class="text-4xl font-bold">A heading</p></div><div class="text-center col-span-1 md:col-span-4"><p class="text-md font-normal">A paragraph</p></div></div>', $html);
 	}
 
 }

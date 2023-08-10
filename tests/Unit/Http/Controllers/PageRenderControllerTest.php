@@ -46,7 +46,7 @@ class PageRenderControllerTest extends TestCase {
 		]);
 
 		$this->get('/page/' . $page->slug)
-			->assertViewHas('contents', '<div class="grid md:grid-cols-4 content-start p-5 gap-4"><div class="col-span-1 md:col-span-4"><p class="text-4xl font-bold">A heading</p></div><div class="col-span-1 md:col-span-4"><p class="text-md font-normal">A paragraph</p></div></div>')
+			->assertViewHas('contents', '<div class="grid md:grid-cols-4 content-start p-5 gap-4"><div class="text-center col-span-1 md:col-span-4"><p class="text-4xl font-bold">A heading</p></div><div class="text-center col-span-1 md:col-span-4"><p class="text-md font-normal">A paragraph</p></div></div>')
 			->assertStatus(200);
 	}
 
