@@ -4,8 +4,11 @@ namespace Drewdan\PageBuilder\Builders;
 
 use Illuminate\Support\Collection;
 use Drewdan\PageBuilder\Contracts\ElementBuilderContract;
+use Drewdan\PageBuilder\Builders\Traits\HasTextAlignment;
 
-class ContainerElementBuilder implements ElementBuilderContract {
+class ContainerElementBuilder extends ElementBuilder implements ElementBuilderContract {
+
+	use HasTextAlignment;
 
 	public Collection $classes;
 
@@ -16,7 +19,7 @@ class ContainerElementBuilder implements ElementBuilderContract {
 		$this->classes = new Collection();
 	}
 
-	public function setMdColspan(string $colspan) {
+	public function setMdColspan(string $colspan): static {
 		$this->classes->push(match ($colspan) {
 			'1' => 'md:col-span-1',
 			'2' => 'md:col-span-2',
@@ -36,7 +39,7 @@ class ContainerElementBuilder implements ElementBuilderContract {
 		return $this;
 	}
 
-	public function setColspan(string $colspan) {
+	public function setColspan(string $colspan): static {
 		$this->classes->push(match ($colspan) {
 			'1' => 'col-span-1',
 			'2' => 'col-span-2',
@@ -120,10 +123,6 @@ class ContainerElementBuilder implements ElementBuilderContract {
 		$output .= '</div>';
 
 		return $output;
-	}
-
-	public static function make(): static {
-		return new static();
 	}
 
 }

@@ -6,11 +6,13 @@ use Illuminate\Support\Collection;
 use Drewdan\PageBuilder\Contracts\ElementBuilderContract;
 use Drewdan\PageBuilder\Builders\Traits\HasSizeClass;
 use Drewdan\PageBuilder\Builders\Traits\HasWeightClass;
+use Drewdan\PageBuilder\Builders\Traits\HasTextAlignment;
 
 class ParagraphElementBuilder extends ElementBuilder implements ElementBuilderContract {
 
 	use HasSizeClass;
 	use HasWeightClass;
+	use HasTextAlignment;
 
 	public string $content = '';
 

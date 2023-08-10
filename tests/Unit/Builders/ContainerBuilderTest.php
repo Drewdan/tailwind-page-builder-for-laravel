@@ -46,6 +46,12 @@ class ContainerBuilderTest extends TestCase {
 		$this->assertContains('grid md:grid-cols-4', $this->class->classes);
 	}
 
+	public function testSetTextAlignment() {
+		$this->class->setTextAlign('text-center');
+
+		$this->assertContains('text-center', $this->class->classes);
+	}
+
 	public function testAddChild() {
 		$heading = HeadingElementBuilder::make()
 			->setContent('test')
@@ -82,6 +88,7 @@ class ContainerBuilderTest extends TestCase {
 			->setSize('sm');
 
 		$output = $this->class
+			->setTextAlign('text-center')
 			->setGrid('4')
 			->setGap('4')
 			->setPadding('5')
@@ -90,7 +97,7 @@ class ContainerBuilderTest extends TestCase {
 			->build();
 
 		$this->assertEquals(
-			'<div class="grid md:grid-cols-4 gap-4 p-5 content-start"><h1 class="text-sm">test</h1><p class="text-sm">test</p></div>',
+			'<div class="text-center grid md:grid-cols-4 gap-4 p-5 content-start"><h1 class="text-sm">test</h1><p class="text-sm">test</p></div>',
 			$output
 		);
 

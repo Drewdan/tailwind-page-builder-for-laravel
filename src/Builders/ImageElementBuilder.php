@@ -6,7 +6,6 @@ use Drewdan\PageBuilder\Contracts\ElementBuilderContract;
 
 class ImageElementBuilder extends ElementBuilder implements ElementBuilderContract {
 
-
 	public string $src = '';
 
 	public string $alt = '';

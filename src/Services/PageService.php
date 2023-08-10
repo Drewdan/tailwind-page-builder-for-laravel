@@ -42,6 +42,7 @@ class PageService {
 
 		foreach ($contents as $content) {
 			$gridContainer = ContainerElementBuilder::make()
+				->setTextAlign($content['textAlign'] ?? '')
 				->setColspan(1)
 				->setMdColspan($content['colSpan']);
 
@@ -60,6 +61,7 @@ class PageService {
 
 				if ($builder instanceof HeadingElementBuilder) {
 					return $builder->setContent($child['content'])
+						->setTextAlign($child['textAlign'] ?? '')
 						->setSize($child['size'])
 						->setWeight($child['weight']);
 				}
@@ -70,6 +72,7 @@ class PageService {
 
 				if ($builder instanceof ParagraphElementBuilder) {
 					return $builder->setContent($child['content'])
+						->setTextAlign($child['textAlign'] ?? '')
 						->setSize($child['size'])
 						->setWeight($child['weight']);
 				}

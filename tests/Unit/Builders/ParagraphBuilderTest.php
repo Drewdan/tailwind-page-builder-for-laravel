@@ -39,11 +39,18 @@ class ParagraphBuilderTest extends TestCase {
 		$this->assertEquals('test', $this->class->content);
 	}
 
-	public function testBuild() {
-		$this->class->setSize('sm');
-		$this->class->setWeight('light');
-		$this->class->setContent('test');
+	public function testSetTextAlign() {
+		$this->class->setTextAlign('text-center');
 
-		$this->assertEquals('<p class="text-sm font-light">test</p>', $this->class->build());
+		$this->assertContains('text-center', $this->class->classes);
+	}
+
+	public function testBuild() {
+		$this->class->setSize('sm')
+			->setWeight('light')
+			->setTextAlign('text-center')
+			->setContent('test');
+
+		$this->assertEquals('<p class="text-sm font-light text-center">test</p>', $this->class->build());
 	}
 }
