@@ -11,7 +11,7 @@
 	<details
 	>
 		<summary
-			class="bg-gray-200 p-4 border-b cursor-pointer"
+			class="font-bold p-4 border-b cursor-pointer"
 		>
 			Container Configuration
 		</summary>

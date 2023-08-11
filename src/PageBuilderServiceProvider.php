@@ -18,7 +18,7 @@ class PageBuilderServiceProvider extends ServiceProvider {
 
 		$this->publishes([
 			__DIR__ . '/../public' => public_path('vendor/page-builder'),
-		], 'public');
+		], 'page-builder-assets');
 
 		$this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
@@ -27,12 +27,16 @@ class PageBuilderServiceProvider extends ServiceProvider {
 
 	public function register() {
 		$this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'page-builder');
+		$this->mergeConfigFrom(__DIR__ . '/../config/element-options.php', 'page-builder-element-options');
 
 		if ($this->app->runningInConsole()) {
 
-			$this->publishes([
-				__DIR__ . '/../config/config.php' => config_path('page-builder.php'),
-			], 'config');
+			$this->publishes(
+				[
+					__DIR__ . '/../config/config.php' => config_path('page-builder.php'),
+					__DIR__ . '/../config/element-options.php' => config_path('page-builder-element-options.php'),
+				],
+				'page-builder-config');
 
 		}
 	}

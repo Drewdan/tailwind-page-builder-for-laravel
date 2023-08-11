@@ -64,6 +64,7 @@ class PageControllerTest extends TestCase {
 						'size' => 'md',
 						'weight' => 'normal',
 						'content' => 'A paragraph',
+						'text-alignment' => 'text-center',
 					],
 				],
 			],

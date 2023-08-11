@@ -19,6 +19,7 @@ return [
 			'weight' => 'bold',
 			'content' => 'Some heading',
 			'alignment' => 'content-left',
+			'options' => 'size,text-alignment,weight,content'
 		],
 		[
 			'id' => 2,
@@ -30,6 +31,7 @@ return [
 			'weight' => 'normal',
 			'content' => 'Some paragraph',
 			'alignment' => 'content-left',
+			'options' => 'size,text-alignment,weight,content'
 		],
 		[
 			'id' => 3,
@@ -39,6 +41,7 @@ return [
 			'description' => 'Use this to create an image element',
 			'src' => 'https://placehold.it/350x150',
 			'alt' => 'Placeholder image',
+			'options' => 'src,alt'
 		]
 	]
 

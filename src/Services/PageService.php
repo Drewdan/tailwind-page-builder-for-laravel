@@ -61,7 +61,7 @@ class PageService {
 
 				if ($builder instanceof HeadingElementBuilder) {
 					return $builder->setContent($child['content'])
-						->setTextAlign($child['textAlign'] ?? '')
+						->setTextAlign($child['text-alignment'] ?? '')
 						->setSize($child['size'])
 						->setWeight($child['weight']);
 				}
@@ -72,7 +72,7 @@ class PageService {
 
 				if ($builder instanceof ParagraphElementBuilder) {
 					return $builder->setContent($child['content'])
-						->setTextAlign($child['textAlign'] ?? '')
+						->setTextAlign($child['text-alignment'] ?? '')
 						->setSize($child['size'])
 						->setWeight($child['weight']);
 				}
