@@ -9,5 +9,6 @@ export default interface TextElementContract {
     weight: string;
     content: string;
     alignment: string;
+    options: any;
 
 }

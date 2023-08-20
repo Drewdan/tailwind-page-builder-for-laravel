@@ -75,6 +75,8 @@ const loadPage = async (slug: string) => {
 	page.value = pageData;
 	if (typeof pageData.content === 'string') {
 		containers.value = JSON.parse(pageData.content) ?? [];
+	} else {
+		containers.value = pageData.content ?? [];
 	}
 }
 
@@ -90,7 +92,7 @@ onMounted(async () => {
 
 <template>
 	<div class="grid grid-cols-5 min-h-screen">
-		<div class="col-span-1 bg-gray-100 flex flex-col h-screen overflow-auto">
+		<div class="col-span-1 flex flex-col h-screen overflow-auto border-r">
 			<div class="flex flex-col">
 				<button
 					@click="clearAll"
@@ -114,7 +116,7 @@ onMounted(async () => {
 			<details
 				v-if="containers.length"
 			>
-				<summary class="bg-gray-200 p-4 border-b cursor-pointer">Components</summary>
+				<summary class="font-bold p-4 border-b cursor-pointer">Components</summary>
 				<div class="flex flex-col gap-3 p-3 bg-white">
 					<div
 						class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
@@ -140,23 +142,26 @@ onMounted(async () => {
 			<ElementConfiguration
 				v-if="selectedElement"
 				v-model="selectedElement"
+				:elements="items"
 			/>
 		</div>
 
-		<div
-			class="col-span-4 grid grid-cols-4 gap-4 p-5 content-start"
-		>
-			<ContainerElement
-				:items="items"
-				@click="selectContainer(container)"
-				@dragover.prevent
-				@dragenter.prevent
-				@drop="(e) => onDrop(e, container)"
-				:key="container.id"
-				v-for="container in containers"
-				:container="container"
-				@selectElement="selectElement"
-			/>
+		<div class="col-span-4 overflow-auto h-screen">
+			<div
+				class="grid grid-cols-4 gap-4 p-5 content-start"
+			>
+				<ContainerElement
+					:items="items"
+					@click="selectContainer(container)"
+					@dragover.prevent
+					@dragenter.prevent
+					@drop="(e) => onDrop(e, container)"
+					:key="container.id"
+					v-for="container in containers"
+					:container="container"
+					@selectElement="selectElement"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
