@@ -1,3 +1,10 @@
+# 0.1.0 (2023-10-05)
+
+- Allows elements to be text aligned
+- Builds element configuration from the options provided in the json configuration
+- Allows for publishing of the configuration and assets using a command
+- Adds a nicer error handling page
+
 # 0.0.6 (2023-08-08)
 
 - More vite fixes
