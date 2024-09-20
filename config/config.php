@@ -7,6 +7,14 @@ return [
 		'prefix' => null,
 		'middleware' => ['web'], // you probably want to include 'web' here
 	],
+	'storage' => [
+		'endpoint' => env('PAGE_BUILDER_ENDPOINT', env('AWS_ENDPOINT')),
+		'default_region' => env('PAGE_BUILDER_DEFAULT_REGION', env('AWS_DEFAULT_REGION')),
+		'access_key_id' => env('PAGE_BUILDER_ACCESS_KEY_ID', env('AWS_ACCESS_KEY_ID')),
+		'secret_access_key' => env('PAGE_BUILDER_SECRET_ACCESS_KEY', env('AWS_SECRET_ACCESS_KEY')),
+		'bucket' => env('PAGE_BUILDER_BUCKET', env('AWS_BUCKET')),
+		'path_style_endpoint' => env('PAGE_BUILDER_PATH_STYLE_ENDPOINT', false),
+	],
 	'layout' => 'default-layout',
 	'elements' => [
 		[
