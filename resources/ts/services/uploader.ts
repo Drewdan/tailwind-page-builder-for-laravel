@@ -25,7 +25,7 @@ class Uploader {
 
         if (import.meta.env.DEV) {
             console.log('loading client for dev file uploader');
-            config.baseURL = 'http://package.test';
+            config.baseURL = 'http://daviesflorist.test';
         }
 
         this.client = axios.create(config);

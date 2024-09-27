@@ -1,7 +1,5 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
-import Page from "../types/page";
-import ElementContainerInterface from "../contracts/element-container-interface";
-import TextElementContract from "../types/text-element";
+import {Page} from "../types/page";
 
 export default class ApiClient {
 
@@ -16,27 +14,23 @@ export default class ApiClient {
 
 		if (import.meta.env.DEV) {
 			console.log('loading client for dev');
-			config.baseURL = 'http://package.test';
+			config.baseURL = 'http://daviesflorist.test';
 		}
 
 		this.client = axios.create(config);
 
-		this.client.interceptors.response.use(
-			response => response,
-			async error => {
-				if (error.response.status === 401) {
-					window.location.href = '/login';
-				}
-
-				window.location.href = `/page-builder/error/${error.response.status}`;
-
-				return Promise.reject(error);
-			}
-		);
-	}
-
-	async loadElements(): Promise<TextElementContract[]> {
-		return (await this.client.get('/page-builder/elements')).data;
+		// this.client.interceptors.response.use(
+		// 	response => response,
+		// 	async error => {
+		// 		if (error.response.status === 401) {
+		// 			window.location.href = '/login';
+		// 		}
+		//
+		// 		window.location.href = `/page-builder/error/${error.response.status}`;
+		//
+		// 		return Promise.reject(error);
+		// 	}
+		// );
 	}
 
 	async loadPages(): Promise<Page[]> {
@@ -51,11 +45,8 @@ export default class ApiClient {
 		await this.client.post('/page-builder/data/pages', {title});
 	}
 
-	async savePage(slug: string, title: string, content: ElementContainerInterface[]): Promise<void> {
-		await this.client.put(`/page-builder/data/pages/${slug}`, {
-			title,
-			content: content
-		});
+	async savePage(page: Page): Promise<void> {
+		await this.client.put(`/page-builder/data/pages/${page.slug}`, page);
 	}
 
 	async storeFile(uuid: string, key: string, bucket: string): Promise<string> {

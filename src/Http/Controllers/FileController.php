@@ -16,14 +16,14 @@ class FileController extends Controller {
 			$fileName,
 		);
 
-		Storage::setVisibility(
+		Storage::disk('s3')->setVisibility(
 			$fileName,
 			'public',
 		);
 
 		return response(
 			[
-				'file' => Storage::url($fileName),
+				'file' => Storage::disk('s3')->url($fileName),
 			]
 		);
 	}
