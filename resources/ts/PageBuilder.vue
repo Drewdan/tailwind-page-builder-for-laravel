@@ -152,7 +152,7 @@
 	}
 
 	const orderedBodyElements = computed(() => {
-		return page.value?.body.sort((a: PageElement, b: PageElement) => a.order - b.order) ?? [];
+		return page.value?.body?.sort((a: PageElement, b: PageElement) => a.order - b.order) ?? [];
 	});
 
 	const availableConfigurationComponents = computed(() => {
