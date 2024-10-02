@@ -7,7 +7,7 @@ use Drewdan\PageBuilder\Http\Controllers\FileController;
 use Drewdan\PageBuilder\Http\Controllers\SignedStorageUrlController;
 
 
-Route::get('/pages/{page:slug}', [AppController::class, '__invoke'])->name('laravel-page-builder.show');
+Route::get('/pages/{page:uuid}', [AppController::class, '__invoke'])->name('laravel-page-builder.show');
 Route::get('/error/{code}', [AppController::class, '__invoke'])->name('laravel-page-builder.error');
 
 Route::get('/data/pages/{page:uuid}', [PageController::class, 'show'])->name('laravel-page-builder.pages.show');
