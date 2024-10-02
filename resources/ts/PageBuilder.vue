@@ -9,8 +9,9 @@
 	import TextareaInput from "./components/common/TextareaInput.vue";
 	import ElementTreeEntry from "./components/ElementTreeEntry.vue";
 	import ElementRenderer from "./components/ElementRenderer.vue";
+	import {useRoute} from "vue-router";
 
-
+	const route = useRoute();
 	const client = new ApiClient();
 
 	const page = ref<Page>({
@@ -81,11 +82,7 @@
 			return;
 		}
 
-		/**
-		 * If there is no data in local storage, we will load the page from the server
-		 *
-		 * TODO: Load from server
-		 */
+		page.value = await client.loadPage(uuid);
 	}
 
 	const save = async () => {
@@ -106,7 +103,7 @@
 	}
 
 	onBeforeMount(async () => {
-		await loadPage('fea927db-b2b9-403c-b6fb-e63a0f02ead6');
+		await loadPage(route.params.uuid as string);
 	});
 
 	/**

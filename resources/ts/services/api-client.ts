@@ -38,7 +38,7 @@ export default class ApiClient {
 	}
 
 	async loadPage(slug: string): Promise<Page> {
-		return (await this.client.get(`/page-builder/data/pages/${slug}`)).data.page;
+		return (await this.client.get(`/page-builder/data/pages/${slug}`)).data;
 	}
 
 	async createPage(title: string): Promise<void> {
@@ -46,7 +46,7 @@ export default class ApiClient {
 	}
 
 	async savePage(page: Page): Promise<void> {
-		await this.client.put(`/page-builder/data/pages/${page.slug}`, page);
+		await this.client.put(`/page-builder/data/pages/${page.uuid}`, page);
 	}
 
 	async storeFile(uuid: string, key: string, bucket: string): Promise<string> {

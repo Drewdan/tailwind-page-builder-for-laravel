@@ -6,7 +6,7 @@ import Main from "./Main.vue";
 import ErrorPage from "./ErrorPage.vue";
 
 const routes = [
-    { path: '/page-builder/pages/:slug', component: PageBuilder },
+    { path: '/page-builder/pages/:uuid', component: PageBuilder },
     { path: '/page-builder/error/:code', component: ErrorPage, name: 'error' },
 ];
 
