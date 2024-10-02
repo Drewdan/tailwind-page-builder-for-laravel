@@ -1,8 +1,8 @@
 {
   "resources/ts/main.ts": {
     "file": "tailwind-page-builder.umd.cjs",
-    "src": "resources/ts/main.ts",
-    "isEntry": true
+    "isEntry": true,
+    "src": "resources/ts/main.ts"
   },
   "style.css": {
     "file": "style.css",

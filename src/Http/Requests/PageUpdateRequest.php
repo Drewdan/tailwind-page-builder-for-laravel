@@ -8,16 +8,11 @@ class PageUpdateRequest extends FormRequest {
 
 	public function rules(): array {
 		return [
-			'title' => [
+			'slug' => [
 				'required',
 			],
-			'content' => [
-				'nullable',
-				'array',
-			],
-			'page_title' => [
-				'nullable',
-				'string',
+			'label' => [
+				'required',
 			],
 			'meta_description' => [
 				'nullable',
@@ -26,6 +21,15 @@ class PageUpdateRequest extends FormRequest {
 			'meta_keywords' => [
 				'nullable',
 				'string',
+			],
+			'head' => [
+				'nullable',
+			],
+			'body' => [
+				'nullable',
+			],
+			'foot' => [
+				'nullable',
 			],
 		];
 	}

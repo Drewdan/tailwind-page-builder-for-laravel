@@ -5,18 +5,15 @@ namespace Drewdan\PageBuilder\Services;
 use Illuminate\Support\Collection;
 use Drewdan\PageBuilder\Models\Page;
 use Drewdan\PageBuilder\Dtos\PageRoute;
-use Drewdan\PageBuilder\Builders\ImageElementBuilder;
-use Drewdan\PageBuilder\Builders\HeadingElementBuilder;
-use Drewdan\PageBuilder\Builders\ContainerElementBuilder;
-use Drewdan\PageBuilder\Builders\ParagraphElementBuilder;
+use Drewdan\PageBuilder\Dtos\PageElement;
 
 class PageService {
 
 	public static function getRouteList(): Collection {
-		return Page::query()->select(['title', 'slug'])->get()->map(function (Page $page) {
+		return Page::query()->select(['label', 'slug'])->get()->map(function (Page $page) {
 			$pageRoute = new PageRoute();
 
-			$pageRoute->title = $page->title;
+			$pageRoute->title = $page->label;
 			$pageRoute->url = route('page-builder.page', ['page' => $page->slug]);
 
 			return $pageRoute;
@@ -24,70 +21,90 @@ class PageService {
 	}
 
 	public function buildPage(Page $page): string {
-		// This is the parent container which contains the grid layout
-		$container = ContainerElementBuilder::make()
-			->setGrid('4')
-			->setContentFlow('content-start')
-			->setPadding('5')
-			->setGap('4');
+		$pageElements = $page->body;
 
-		$contents = $page->content;
-
-		// This page has no contents yet, so just early return an empty string
-		if (!$contents) {
-			return '<div></div>';
+		if (!$pageElements) {
+			return '';
 		}
 
-		$gridContainers = collect();
+		// we need to sort the elements by their order
+		usort($pageElements, function ($a, $b) {
+			return $a['order'] <=> $b['order'];
+		});
 
-		foreach ($contents as $content) {
-			$gridContainer = ContainerElementBuilder::make()
-				->setTextAlign($content['textAlign'] ?? '')
-				->setColspan(1)
-				->setMdColspan($content['colSpan']);
+		$pageString = '<div class="grid md:grid-cols-4 content-start p-5 gap-4">';
 
-			$children = collect($content['elements'] ?? [])->map(function ($child) {
-				if (isset($child['renderer']) && $child['renderer'] === 'Image') {
-					return ImageElementBuilder::make()
-						->setSrc($child['src'])
-						->setAlt($child['alt']);
-				}
+		foreach ($pageElements as $element) {
+			$pageString .= $this->buildElement($element);
+		}
 
-				$builder = match ($child['renderer'] ?? 'Text') {
-					'Heading' => HeadingElementBuilder::make(),
-					'Paragraph', 'Text' => ParagraphElementBuilder::make(),
-					default => throw new \Exception('Invalid renderer type ' . $child['renderer']),
-				};
+		$pageString .= '</div>';
 
-				if ($builder instanceof HeadingElementBuilder) {
-					return $builder->setContent($child['content'])
-						->setTextAlign($child['text-alignment'] ?? '')
-						->setSize($child['size'])
-						->setWeight($child['weight']);
-				}
+		return $pageString;
+	}
 
-				if (!isset($child['content'])) {
-					throw new \Exception('Invalid content');
-				}
+	public function buildElement(array $element): string {
+		$pageElement = PageElement::fromArray($element);
 
-				if ($builder instanceof ParagraphElementBuilder) {
-					return $builder->setContent($child['content'])
-						->setTextAlign($child['text-alignment'] ?? '')
-						->setSize($child['size'])
-						->setWeight($child['weight']);
-				}
+		$elementString = "<{$pageElement->as} ";
 
-				throw new \Exception('Invalid builder type');
+		// now we add the classes
+		if ($pageElement->attributes->classes) {
+			$elementString .= 'class="' . implode(' ', $pageElement->attributes->classes) . '" ';
+		}
+
+		// now we add the styles
+		if ($pageElement->attributes->styles) {
+			$elementString .= 'style="' . implode(';', $pageElement->attributes->styles) . '" ';
+		}
+
+		// now we add the title
+		if ($pageElement->attributes->title) {
+			$elementString .= 'title="' . $pageElement->attributes->title . '" ';
+		}
+
+		// now we add the alt
+		if ($pageElement->attributes->alt) {
+			$elementString .= 'alt="' . $pageElement->attributes->alt . '" ';
+		}
+
+		// now we add the src
+		if ($pageElement->attributes->src) {
+			$elementString .= 'src="' . $pageElement->attributes->src . '" ';
+		}
+
+		// now we add the href
+		if ($pageElement->attributes->href) {
+			$elementString .= 'href="' . $pageElement->attributes->href . '" ';
+		}
+
+
+		$closingTag = $pageElement->as === 'img' ? '/>' : '>';
+
+		// now we add the text node if there is one
+		if ($pageElement->content) {
+			$elementString .= $closingTag . $pageElement->content;
+		} else {
+			$elementString .= $closingTag;
+		}
+
+		// now we add the child elements by recursively calling this function
+		if ($pageElement->elements) {
+			// we need to sort the elements by their order
+			usort($pageElement->elements, function ($a, $b) {
+				return $a['order'] <=> $b['order'];
 			});
 
-			$gridContainer->addChild(...$children);
-
-			$gridContainers->push($gridContainer);
+			foreach ($pageElement->elements as $childElement) {
+				$elementString .= $this->buildElement($childElement);
+			}
 		}
 
-		$container->addChild(...$gridContainers);
+		if ($closingTag !== '/>') {
+			$elementString .= "</{$pageElement->as}>";
+		}
 
-		return $container->build();
+		return $elementString;
 	}
 
 }

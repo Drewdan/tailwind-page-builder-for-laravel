@@ -10,8 +10,10 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    "downlevelIteration": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": "."
   },
   "include": ["resources/ts/**/*.ts", "resources/ts/**/*.d.ts", "resources/ts/**/*.tsx", "resources/ts/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

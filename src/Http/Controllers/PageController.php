@@ -2,31 +2,21 @@
 
 namespace Drewdan\PageBuilder\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Drewdan\PageBuilder\Models\Page;
-use Drewdan\PageBuilder\Http\Requests\PageStoreRequest;
 use Drewdan\PageBuilder\Http\Requests\PageUpdateRequest;
 
 class PageController extends Controller {
 
-	// TODO: config item for allowing policies to be added
+	/**
+	 * No create route, as we will only be updating pages. The implementer
+	 * of this package will have to create their own pages, but we will
+	 * provide a service for this.
+	 */
 
-	public function index() {
-		$pages = Page::all();
-
-		return response(['pages' => $pages]);
-	}
-
-	// This won't be needed as we will use the vue router
-	public function show(Page $page): Response {
-		return response(['page' => $page]);
-	}
-
-	public function store(PageStoreRequest $request): Response {
-		Page::create($request->validated());
-
-		return response()->noContent();
+	public function show(Page $page): JsonResponse {
+		return response()->json($page);
 	}
 
 	public function update(PageUpdateRequest $request, Page $page): Response {

@@ -1,25 +1,22 @@
 <script setup lang="ts">
 
-	const props = defineProps<{
-		modelValue: any,
-		options: any,
-		title: string,
+	defineProps<{
+		title: string;
 	}>();
 
-	defineEmits(['update:modelValue']);
-
+	const model = defineModel();
 </script>
 
 <template>
 	<div class="flex flex-col gap-1">
 		<label class="text-sm font-bold">
-			{{ props.title }}
+			{{ title }}
 		</label>
-		<textarea
-			:value="props.modelValue"
-			@input="$emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
+		<input
+			type="text"
+			v-model="model"
 			class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm text-xs"
-		></textarea>
+		/>
 	</div>
 </template>
 

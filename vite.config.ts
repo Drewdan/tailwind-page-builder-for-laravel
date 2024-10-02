@@ -1,6 +1,7 @@
 import {defineConfig, UserConfigExport} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import laravel from 'laravel-vite-plugin'
+import tsconfigPaths from "vite-tsconfig-paths";
 
 
 // https://vitejs.dev/config/
@@ -17,7 +18,16 @@ export default defineConfig(({ mode }) => {
             mode === 'production' ? laravel({
                 input: 'resources/ts/main.ts'
             }) : null,
-            vue()
+            vue({
+				script: {
+					defineModel: true,
+				},
+			}),
+            tsconfigPaths(
+				{
+					loose: true,
+				},
+			),
         ],
     };
 

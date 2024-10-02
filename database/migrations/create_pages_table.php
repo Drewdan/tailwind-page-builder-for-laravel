@@ -9,12 +9,14 @@ return new class extends Migration {
 	public function up(): void {
 		Schema::create('pages', function (Blueprint $table) {
 			$table->id();
-			$table->string('title');
+			$table->string('uuid')->unique();
 			$table->string('slug');
-			$table->json('content')->nullable();
-			$table->string('page_title')->nullable();
+			$table->string('label');
 			$table->string('meta_description')->nullable();
 			$table->string('meta_keywords')->nullable();
+			$table->json('head')->nullable();
+			$table->json('body')->nullable();
+			$table->json('foot')->nullable();
 			$table->timestamps();
 		});
 	}
