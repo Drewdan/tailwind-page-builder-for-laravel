@@ -12786,8 +12786,8 @@ const Td = { class: "grid grid-cols-5 min-h-screen" }, Pd = { class: "col-span-1
         b
       ];
     }, d = De(() => {
-      var m;
-      return ((m = r.value) == null ? void 0 : m.body.sort((v, b) => v.order - b.order)) ?? [];
+      var m, v;
+      return ((v = (m = r.value) == null ? void 0 : m.body) == null ? void 0 : v.sort((b, N) => b.order - N.order)) ?? [];
     }), h = De(() => {
       var m;
       return W0(((m = o.value) == null ? void 0 : m.as) ?? "");
